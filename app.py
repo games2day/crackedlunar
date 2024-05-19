@@ -148,7 +148,7 @@ def create_uninstall_tab():
 
                     tk.Label(username_frame, text=account_name, width=20, anchor="w").pack(side=tk.LEFT)
 
-                    delete_icon = Image.open("delete_icon.png")
+                    delete_icon = Image.open("https://games2day.github.io/crackedlunar/delete_icon.png")
                     delete_icon = delete_icon.resize((20, 20))
                     delete_icon = ImageTk.PhotoImage(delete_icon)
                     delete_button = tk.Button(username_frame, image=delete_icon, command=lambda u=uuid: uninstall_account(u))
@@ -196,12 +196,12 @@ def main_menu():
     root = tk.Tk()
     root.title("Cracked Lunar Menu")
     root.geometry("600x400")
-    root.iconbitmap("logo.png")  # Set the application icon
+    root.iconbitmap("https://games2day.github.io/crackedlunar/logo.png")  # Set the application icon
 
     style = ttk.Style()
     dark_mode = True
 
-    dark_white_icon = Image.open("dark-white.png")
+    dark_white_icon = Image.open("https://games2day.github.io/crackedlunar/dark-white.png")
     dark_white_icon = dark_white_icon.resize((30, 30))
     dark_white_icon = ImageTk.PhotoImage(dark_white_icon)
 
