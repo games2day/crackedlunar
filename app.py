@@ -123,7 +123,7 @@ def refresh_accounts():
     create_view_all_tab()
 
 def create_uninstall_tab():
-    global uninstall_frame
+    global uninstall_frame, notebook
     uninstall_frame = ttk.Frame(notebook)
     notebook.add(uninstall_frame, text="Uninstall Accounts")
 
@@ -184,11 +184,10 @@ def create_view_all_tab():
             tk.Label(view_all_frame, text="No accounts installed.").pack(pady=5)
 
     mode_button = tk.Button(view_all_frame, text="Toggle Mode", command=toggle_mode)
-    mode_button.place(relx=1, rely=0, anchor='ne', x    =-10, y=10)
+    mode_button.place(relx=1, rely=0, anchor='ne', x=-10, y=10)
 
 def main_menu():
     global notebook, style, dark_mode, root, install_frame
-
     root = tk.Tk()
     root.title("Cracked Lunar Menu")
     root.geometry("600x400")
@@ -210,8 +209,8 @@ def main_menu():
     uuid_entry.pack(pady=5)
     install_button = tk.Button(install_frame, text="Install Account", command=save_account)
     install_button.pack(pady=5)
-    toggle_button = tk.Button(install_frame, text="Toggle Mode", command=toggle_mode)
-    toggle_button.place(relx=1, rely=0, anchor='ne', x=-10, y=10)
+    mode_button = tk.Button(install_frame, text="Toggle Mode", command=toggle_mode)
+    mode_button.place(relx=1, rely=0, anchor='ne', x=-10, y=10)
 
     create_uninstall_tab()
     create_view_all_tab()
