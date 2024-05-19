@@ -48,7 +48,6 @@ def save_account():
     uuid = uuid_entry.get().replace("-", "")
     username = username_entry.get()
 
-    # Check if both UUID and username fields are not empty
     if not uuid or not username:
         messagebox.showerror("Error", "Please enter both UUID and username.")
         return
@@ -91,7 +90,6 @@ def save_account():
     refresh_accounts()
     username_entry.delete(0, tk.END)
     uuid_entry.delete(0, tk.END)
-
 
 def uninstall_account(uuid):
     file_path = os.path.expanduser('~/.lunarclient/settings/game/accounts.json')
@@ -148,12 +146,17 @@ def create_uninstall_tab():
 
                     tk.Label(username_frame, text=account_name, width=20, anchor="w").pack(side=tk.LEFT)
 
-                    delete_icon = Image.open("./delete_icon.png")
-                    delete_icon = delete_icon.resize((20, 20))
-                    delete_icon = ImageTk.PhotoImage(delete_icon)
-                    delete_button = tk.Button(username_frame, image=delete_icon, command=lambda u=uuid: uninstall_account(u))
-                    delete_button.image = delete_icon
-                    delete_button.pack(side=tk.RIGHT)
+                    delete_icon_path = "./delete_icon.png"
+                    if os.path.exists(delete_icon_path):
+                        delete_icon = Image.open(delete_icon_path)
+                        delete_icon = delete_icon.resize((20, 20))
+                        delete_icon = ImageTk.PhotoImage(delete_icon)
+                        delete_button = tk.Button(username_frame, image=delete_icon, command=lambda u=uuid: uninstall_account(u))
+                        delete_button.image = delete_icon
+                        delete_button.pack(side=tk.RIGHT)
+                    else:
+                        delete_button = tk.Button(username_frame, text="Delete", command=lambda u=uuid: uninstall_account(u))
+                        delete_button.pack(side=tk.RIGHT)
 
             else:
                 tk.Label(uninstall_frame, text="No accounts installed.").pack(pady=5)
@@ -196,14 +199,21 @@ def main_menu():
     root = tk.Tk()
     root.title("Cracked Lunar Menu")
     root.geometry("600x400")
-    root.iconbitmap("./icon.png")  # Set the application icon
+
+    icon_path = "./icon.png"
+    if os.path.exists(icon_path):
+        root.iconbitmap(icon_path)
 
     style = ttk.Style()
     dark_mode = True
 
-    dark_white_icon = Image.open("./dark-white.png")
-    dark_white_icon = dark_white_icon.resize((30, 30))
-    dark_white_icon = ImageTk.PhotoImage(dark_white_icon)
+    dark_white_icon_path = "./dark-white.png"
+    if os.path.exists(dark_white_icon_path):
+        dark_white_icon = Image.open(dark_white_icon_path)
+        dark_white_icon = dark_white_icon.resize((30, 30))
+        dark_white_icon = ImageTk.PhotoImage(dark_white_icon)
+    else:
+        dark_white_icon = None
 
     notebook = ttk.Notebook(root)
 
@@ -219,8 +229,9 @@ def main_menu():
     uuid_entry.pack(pady=5)
     install_button = tk.Button(install_frame, text="Install Account", command=save_account)
     install_button.pack(pady=5)
-    mode_button = tk.Button(install_frame, image=dark_white_icon, command=toggle_mode)
-    mode_button.place(relx=1, rely=0, anchor='ne', x=-10, y=10)
+    if dark_white_icon:
+        mode_button = tk.Button(install_frame, image=dark_white_icon, command=toggle_mode)
+        mode_button.place(relx=1, rely=0, anchor='ne', x=-10, y=10)
 
     create_uninstall_tab()
     create_view_all_tab()
